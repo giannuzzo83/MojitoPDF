@@ -1,7 +1,8 @@
 node_modules/
 dist/
 dist-electron/
-release/
+release/*
+!release/*.exe
 build/icon-512.png
 *.log
 .DS_Store

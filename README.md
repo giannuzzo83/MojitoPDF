@@ -2,6 +2,11 @@
 
 App desktop Windows per alleggerire documenti PDF in locale, con preset di qualità, dimensione target e opzione di appiattimento pagine.
 
+## Download
+
+Scarica l’installer Windows pronto all’uso da [`release/MojitoPDF-Setup-1.0.0.exe`](release/MojitoPDF-Setup-1.0.0.exe).  
+Serve anche **Ghostscript** (vedi sotto).
+
 ## Requisiti
 
 - **Node.js** 20+ (per sviluppo)
