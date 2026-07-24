@@ -19,7 +19,7 @@ function createWindow() {
     minWidth: 580,
     minHeight: 700,
     title: 'MojitoPDF',
-    backgroundColor: '#12241c',
+    backgroundColor: '#0f2a1c',
     icon: path.join(__dirname, '../build/icon.ico'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
