@@ -30,9 +30,9 @@ function fileName(filePath: string): string {
 function defaultDietPath(inputPath: string): string {
   const parts = inputPath.split(/[/\\]/)
   const name = parts.pop() ?? 'documento.pdf'
-  const base = name.replace(/\.pdf$/i, '').replace(/_diet$/i, '')
+  const base = name.replace(/\.pdf$/i, '').replace(/_mojito$/i, '').replace(/_diet$/i, '')
   const folder = parts.join('\\')
-  return `${folder}\\${base}_diet.pdf`
+  return `${folder}\\${base}_mojito.pdf`
 }
 
 export default function App() {
@@ -49,7 +49,7 @@ export default function App() {
   const [dragOver, setDragOver] = useState(false)
 
   useEffect(() => {
-    void window.pdfDiet.checkGhostscript().then((status) => {
+    void window.mojitoPdf.checkGhostscript().then((status) => {
       setGsAvailable(status.available)
     })
   }, [])
@@ -65,7 +65,7 @@ export default function App() {
     setResult(null)
     setError(null)
     setPhase('idle')
-    const info = await window.pdfDiet.getFileInfo(path)
+    const info = await window.mojitoPdf.getFileInfo(path)
     if (info.ok) {
       setOriginalBytes(info.bytes)
       const mb = Math.max(0.1, Math.round((info.bytes / (1024 * 1024)) * 0.3 * 10) / 10)
@@ -83,7 +83,7 @@ export default function App() {
       (targetBytes !== null && originalBytes !== null && targetBytes < originalBytes))
 
   const selectFile = useCallback(async () => {
-    const path = await window.pdfDiet.openPdfDialog()
+    const path = await window.mojitoPdf.openPdfDialog()
     if (!path) return
     await loadFile(path)
   }, [loadFile])
@@ -101,7 +101,7 @@ export default function App() {
       }
       let path = ''
       try {
-        path = window.pdfDiet.getPathForFile(file)
+        path = window.mojitoPdf.getPathForFile(file)
       } catch {
         path = ''
       }
@@ -123,7 +123,7 @@ export default function App() {
 
       let outputPath: string | undefined
       if (chooseLocation) {
-        const chosen = await window.pdfDiet.savePdfDialog(defaultDietPath(inputPath))
+        const chosen = await window.mojitoPdf.savePdfDialog(defaultDietPath(inputPath))
         if (!chosen) {
           setPhase(result ? 'done' : 'idle')
           return
@@ -133,13 +133,13 @@ export default function App() {
 
       const response =
         mode === 'target' && targetBytes
-          ? await window.pdfDiet.compressToTarget({
+          ? await window.mojitoPdf.compressToTarget({
               inputPath,
               outputPath,
               targetBytes,
               flatten,
             })
-          : await window.pdfDiet.compressPdf({
+          : await window.mojitoPdf.compressPdf({
               inputPath,
               outputPath,
               preset,
@@ -170,8 +170,8 @@ export default function App() {
     <div className="app">
       <div className="atmosphere" aria-hidden />
       <header className="header">
-        <p className="brand">PDFDiet</p>
-        <p className="tagline">Alleggerisci i PDF senza lasciare il tuo PC</p>
+        <p className="brand">MojitoPDF</p>
+        <p className="tagline">PDF più leggeri, freschi come un mojito</p>
       </header>
 
       <main className="main">
@@ -184,7 +184,7 @@ export default function App() {
             <button
               type="button"
               className="btn btn-ghost"
-              onClick={() => void window.pdfDiet.openExternal(GS_DOWNLOAD)}
+              onClick={() => void window.mojitoPdf.openExternal(GS_DOWNLOAD)}
             >
               Scarica Ghostscript
             </button>
@@ -394,7 +394,7 @@ export default function App() {
               <button
                 type="button"
                 className="btn btn-secondary"
-                onClick={() => void window.pdfDiet.showInFolder(result.outputPath)}
+                onClick={() => void window.mojitoPdf.showInFolder(result.outputPath)}
               >
                 Apri cartella
               </button>

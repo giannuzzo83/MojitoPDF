@@ -2,6 +2,7 @@ node_modules/
 dist/
 dist-electron/
 release/
+build/icon-512.png
 *.log
 .DS_Store
 Thumbs.db

@@ -195,8 +195,8 @@ export async function findGhostscript(): Promise<string | null> {
 function defaultOutputPath(inputPath: string): string {
   const dir = path.dirname(inputPath)
   const base = path.basename(inputPath, path.extname(inputPath))
-  const cleaned = base.replace(/_diet$/i, '')
-  return path.join(dir, `${cleaned}_diet.pdf`)
+  const cleaned = base.replace(/_mojito$/i, '').replace(/_diet$/i, '')
+  return path.join(dir, `${cleaned}_mojito.pdf`)
 }
 
 function savedPercent(originalBytes: number, compressedBytes: number): number {
@@ -356,7 +356,7 @@ async function rasterizeViaJpeg(
   dpi: number,
   jpegq: number,
 ): Promise<number> {
-  const workDir = await fs.mkdtemp(path.join(os.tmpdir(), 'pdfdiet-jpeg-'))
+  const workDir = await fs.mkdtemp(path.join(os.tmpdir(), 'mojitopdf-jpeg-'))
   const pattern = toGsPath(path.join(workDir, 'p-%04d.jpg'))
   const input = toGsPath(inputPath)
   const combinedPath = path.join(workDir, 'combined.pdf')
@@ -416,7 +416,7 @@ async function rasterizeViaPdfImage(
   outputPath: string,
   dpi: number,
 ): Promise<number> {
-  const workDir = await fs.mkdtemp(path.join(os.tmpdir(), 'pdfdiet-img-'))
+  const workDir = await fs.mkdtemp(path.join(os.tmpdir(), 'mojitopdf-img-'))
   const tempOut = path.join(workDir, 'out.pdf')
 
   try {
@@ -491,7 +491,7 @@ export async function estimatePreview(
   }
 
   const originalBytes = (await fs.stat(inputPath)).size
-  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'pdfdiet-preview-'))
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'mojitopdf-preview-'))
   const tempOut = path.join(tempDir, 'preview.pdf')
 
   try {
@@ -628,7 +628,7 @@ export async function compressToTarget(
     }
   }
 
-  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'pdfdiet-target-'))
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'mojitopdf-target-'))
   let bestPath: string | null = null
   let bestBytes = Number.POSITIVE_INFINITY
   let usedRaster = false

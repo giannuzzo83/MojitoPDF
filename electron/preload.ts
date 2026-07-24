@@ -47,4 +47,4 @@ const api: PdfDietApi = {
   getPathForFile: (file) => webUtils.getPathForFile(file),
 }
 
-contextBridge.exposeInMainWorld('pdfDiet', api)
+contextBridge.exposeInMainWorld('mojitoPdf', api)
