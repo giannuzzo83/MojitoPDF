@@ -35,6 +35,17 @@ function defaultDietPath(inputPath: string): string {
   return `${folder}\\${base}_mojito.pdf`
 }
 
+const BUBBLES = Array.from({ length: 26 }, (_, i) => {
+  const size = 7 + ((i * 17) % 20)
+  return {
+    id: i,
+    size,
+    left: `${(i * 37) % 100}%`,
+    duration: `${12 + (i % 10)}s`,
+    delay: `${(i * 0.7) % 14}s`,
+  }
+})
+
 export default function App() {
   const [inputPath, setInputPath] = useState<string | null>(null)
   const [originalBytes, setOriginalBytes] = useState<number | null>(null)
@@ -169,6 +180,21 @@ export default function App() {
   return (
     <div className="app">
       <div className="atmosphere" aria-hidden />
+      <div className="bubbles" aria-hidden>
+        {BUBBLES.map((b) => (
+          <span
+            key={b.id}
+            className="bubble"
+            style={{
+              width: b.size,
+              height: b.size,
+              left: b.left,
+              animationDuration: b.duration,
+              animationDelay: b.delay,
+            }}
+          />
+        ))}
+      </div>
       <header className="header">
         <p className="brand">MojitoPDF</p>
         <p className="tagline">PDF più leggeri, freschi come un mojito</p>

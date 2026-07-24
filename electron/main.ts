@@ -1,4 +1,4 @@
-import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron'
+import { app, BrowserWindow, dialog, ipcMain, Menu, shell } from 'electron'
 import path from 'node:path'
 import {
   compressPdf,
@@ -19,7 +19,7 @@ function createWindow() {
     minWidth: 580,
     minHeight: 700,
     title: 'MojitoPDF',
-    backgroundColor: '#0f2a1c',
+    backgroundColor: '#0d3f30',
     icon: path.join(__dirname, '../build/icon.ico'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -41,6 +41,7 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+  Menu.setApplicationMenu(null)
   createWindow()
 
   app.on('activate', () => {
